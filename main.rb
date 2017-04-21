@@ -25,15 +25,28 @@ def display
   glMatrixMode(GL_MODELVIEW)
 
   #Dibujamos un triángulo
-  glBegin(GL_TRIANGLES)
-    glColor3f(1.0,0.0,0.0) #Color primer vértice: rojo
-    glVertex3f(0.0,0.8,0.0) #Posición primer vértice
+  # glBegin(GL_TRIANGLES)
+  #   glColor3f(1.0,0.0,0.0) #Color primer vértice: rojo
+  #   glVertex3f(0.0,0.8,0.0) #Posición primer vértice
+  #   glColor3f(0.0,1.0,0.0) #Color segundo vértice: verde
+  #   glVertex3f(-0.6,-0.2,0.0) #Posición segundo vértice
+  #   glColor3f(0.0,0.0,1.0) #Color tercer vértice: azul
+  #   glVertex3f(0.6,-0.2,0.0) #Posición tercer vértice
+  # glEnd
+
+  #Dibujamos un cuadrado
+  glBegin(GL_QUADS)
     glColor3f(0.0,1.0,0.0) #Color primer vértice: verde
-    glVertex3f(-0.6,-0.2,0.0) #Posición primer vértice
+    glVertex3f(-0.6,0.6,0.0) #Posición primer vértice | Top Left
     glColor3f(0.0,0.0,1.0) #Color primer vértice: azul
-    glVertex3f(0.6,-0.2,0.0) #Posición primer vértice
+    glVertex3f(0.6,0.6,0.0) #Posición primer vértice | Top Right
+    glColor3f(1.0,0.0,0.0) #Color primer vértice: rojo
+    glVertex3f(0.6,-0.6,0.0) #Posición primer vértice | Bottom Right
+    glColor3f(1.0,0.0,0.0) #Color primer vértice: rojo
+    glVertex3f(-0.6,-0.6,0.0) #Posición primer vértice | Bottom Left
   glEnd
-  glFlush
+
+  glFlush #Forzar el dibujado
   glutPostRedisplay #Para evitar que el ciclo siga corriendo
 end
 
