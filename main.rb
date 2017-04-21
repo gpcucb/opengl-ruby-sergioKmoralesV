@@ -26,15 +26,15 @@ def display
 
   #Dibujamos un triángulo
   glBegin(GL_TRIANGLES)
-    glColor3f(1.0,0.0,0.0)
-    glVertex3f(0.0,0.8,0.0)
-    glColor3f(0.0,1.0,0.0)
-    glVertex3f(-0.6,-0.2,0.0)
-    glColor3f(0.0,0.0,1.0)
-    glVertex3f(0.6,-0.2,0.0)
+    glColor3f(1.0,0.0,0.0) #Color primer vértice: rojo
+    glVertex3f(0.0,0.8,0.0) #Posición primer vértice
+    glColor3f(0.0,1.0,0.0) #Color primer vértice: verde
+    glVertex3f(-0.6,-0.2,0.0) #Posición primer vértice
+    glColor3f(0.0,0.0,1.0) #Color primer vértice: azul
+    glVertex3f(0.6,-0.2,0.0) #Posición primer vértice
   glEnd
   glFlush
-  glutPostRedisplay #para evitar que el ciclo siga corriendo
+  glutPostRedisplay #Para evitar que el ciclo siga corriendo
 end
 
 glutInit
