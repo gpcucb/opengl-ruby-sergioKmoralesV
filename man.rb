@@ -77,8 +77,8 @@ def display
     #Dibujamos la pierna derecha
     glColor3f(0.0,0.3,0.8)
     glPushMatrix()
-       glTranslatef(-(@BODY_WIDTH-@LEG_WIDTH)/2,-
-  (@BODY_HEIGHT+@LEG_HEIGHT)/2,0)
+       glTranslatef(-(@BODY_WIDTH-@LEG_WIDTH),-(@BODY_HEIGHT+@LEG_HEIGHT)/2+@LEG_WIDTH/2,0)
+       glRotatef(-25,0,0,1)
        glPushMatrix()
          glScalef(@LEG_WIDTH,@LEG_HEIGHT,@LEG_LENGTH)
          glutSolidCube(1)
@@ -92,7 +92,8 @@ def display
     #Dibujamos la pierna izquierda
     glColor3f(0.0,0.3,0.8)
     glPushMatrix()
-       glTranslatef((@BODY_WIDTH-@LEG_WIDTH)/2,-(@BODY_HEIGHT+@LEG_HEIGHT)/2,0)
+       glTranslatef((@BODY_WIDTH-@LEG_WIDTH),-(@BODY_HEIGHT+@LEG_HEIGHT)/2+@LEG_WIDTH/2,0)
+       glRotatef(25,0,0,1)
        glPushMatrix()
          glScalef(@LEG_WIDTH,@LEG_HEIGHT,@LEG_LENGTH)
          glutSolidCube(1)
