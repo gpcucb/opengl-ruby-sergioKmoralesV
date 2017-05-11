@@ -57,28 +57,28 @@ def display
     glPushMatrix()
        glColor3f(1.0,1.0,0.0)
        glTranslatef(0.9,0.9,0)
-	   glutSolidSphere(0.9, 50, 20);
+	   glutSolidSphere(0.9, 50, 50);
     glPopMatrix()
 
     # Dibujamos el esfera2
     glPushMatrix()
        glColor3f(0.0,0.0,1.0)
        glTranslatef(0.9,-0.9,0)
-	   glutSolidSphere(0.9, 50, 20);
+	   glutSolidSphere(0.9, 50, 50);
     glPopMatrix()
 
     # Dibujamos el esfera3
     glPushMatrix()
        glColor3f(1.0,0.0,1.0)
        glTranslatef(-0.9,-0.9,0)
-	   glutSolidSphere(0.9, 50, 20);
+	   glutSolidSphere(0.9, 50, 50);
     glPopMatrix()
 
     # Dibujamos el esfera4
     glPushMatrix()
        glColor3f(0.0,1.0,1.0)
        glTranslatef(-0.9,0.9,0)
-	   glutSolidSphere(0.9, 50, 20);
+	   glutSolidSphere(0.9, 50, 50);
     glPopMatrix()
 
     glFlush()
