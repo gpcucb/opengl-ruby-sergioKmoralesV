@@ -6,8 +6,6 @@ include Gl
 include Glu
 include Glut
 
-#@SQUARE_SIDE = 5.0
-
 def display
     glDepthFunc(GL_LEQUAL)
          glEnable(GL_DEPTH_TEST)
@@ -16,7 +14,7 @@ def display
     glClearDepth(1.0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    light_1_position = [20.0, 20.0, 50.0]
+    light_1_position = [20.0, 20.0, 30.0]
     light_2_position = [-20.0, -20.0, 50.0]
     color = [1.0,1.0,1.0,1.0]
     color2 = [0.0,1.0,1.0,1.0]
