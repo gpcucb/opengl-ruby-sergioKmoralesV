@@ -4,6 +4,7 @@ GEM
     glu (8.2.2)
     glut (8.2.2)
     opengl (0.9.2)
+    wavefront (0.1.2)
 
 PLATFORMS
   ruby
@@ -12,3 +13,4 @@ DEPENDENCIES
   glu
   glut
   opengl
+  wavefront

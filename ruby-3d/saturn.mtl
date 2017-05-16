@@ -1,0 +1,26 @@
+# Blender MTL File: 'Planet Saturn - Cycles.blend'
+# Material Count: 2
+
+newmtl Saturn_Planet
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+# map_Kd C:\\Users\\Andres\\AppData\\Local\\Temp\\Temp1_77419_Planet_Saturn_-_Cycles.zip\\textures\\Saturn_Planet.tga
+# map_Ks C:\\Users\\Andres\\AppData\\Local\\Temp\\Temp1_77419_Planet_Saturn_-_Cycles.zip\\textures\\Saturn_Planet.tga
+map_Kd img/saturn.png
+
+newmtl Saturn_Rings
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 0.000000
+illum 2
+# map_Kd C:\Users\Andres\AppData\Local\Temp\Temp1_77419_Planet_Saturn_-_Cycles.zip\textures\Saturn_Rings.tga
+# map_d C:\\Users\\Andres\\AppData\\Local\\Temp\\Temp1_77419_Planet_Saturn_-_Cycles.zip\\textures\\Saturn_Rings.tga
+map_Kd img/rings.png
