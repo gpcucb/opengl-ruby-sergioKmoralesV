@@ -1,4 +1,3 @@
-# Esta clase lee un archivo de tipo mtl
 require_relative 'material'
 
 class MtlLoader

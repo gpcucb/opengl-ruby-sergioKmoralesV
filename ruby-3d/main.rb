@@ -10,19 +10,37 @@ include Gl
 include Glu
 include Glut
 
-FPS = 50.freeze
+FPS = 100.freeze
 DELAY_TIME = (1000.0 / FPS)
 DELAY_TIME.freeze
+@mercury_size = 2.0
 
 def load_objects
   puts "Loading model"
-  @model = Model.new('obj/planet', 'obj/planet.mtl')
+  @sun = Model.new('obj/planet', 'obj/sun.mtl')
+  @mercury = Model.new('obj/planet', 'obj/mercury.mtl')
+  @venus = Model.new('obj/planet', 'obj/venus.mtl')
+  @earth = Model.new('obj/planet', 'obj/earth.mtl')
+  @mars = Model.new('obj/planet', 'obj/mars.mtl')
+  @jupiter = Model.new('obj/planet', 'obj/jupiter.mtl')
+  @saturn = Model.new('obj/saturn', 'obj/saturn.mtl')
+  @uranus = Model.new('obj/planet', 'obj/uranus.mtl')
+  @neptune = Model.new('obj/planet', 'obj/neptune.mtl')
+  @pluto = Model.new('obj/planet', 'obj/pluto.mtl')
+
   puts "model loaded"
 end
 
 def initGL
+  glDepthFunc(GL_LEQUAL)
   glEnable(GL_DEPTH_TEST)
+  glClearDepth(1.0)
+  
   glClearColor(0.0, 0.0, 0.0, 0.0)
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+  glEnable(GL_LIGHTING)
+  glEnable(GL_LIGHT0)
   glEnable(GL_COLOR_MATERIAL)
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
   glEnable(GL_NORMALIZE)
@@ -30,12 +48,13 @@ def initGL
   glEnable(GL_CULL_FACE)
   glCullFace(GL_BACK)
 
-  position = [0.0, 50.0, 0.0]
-  color = [1.0, 1.0, 1.0, 1.0]
-  ambient = [0.2, 0.2, 0.2, 1.0]
-  glLightfv(GL_LIGHT0, GL_POSITION, position)
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, color)
-  glLightfv(GL_LIGHT0, GL_SPECULAR, color)
+  light_position = [0.0, 50.0, 100.0]
+  light_color = [1.0, 1.0, 1.0, 1.0]
+  specular = [1.0, 1.0, 1.0, 0.0]
+  ambient = [0.15, 0.15, 0.15, 1.0]
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position)
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color)
+  glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient)
 end
 
@@ -45,10 +64,81 @@ def draw
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
   glPushMatrix
-    glTranslate(0.0, -40.0, 0.0)
-    glRotatef(@spin_ven, 0.0, 1.0, 0.0)
-    glScalef(20.0, 20.0, 20.0)
-    @model.draw
+    glTranslate(0.0, 0.0, 0.0)
+    glRotatef(@sun_spin, 0.0, 1.0, 0.0)
+    glScalef(15.0 * @mercury_size, 15.0 * @mercury_size, 15.0 * @mercury_size)
+    @sun.draw
+  glPopMatrix
+
+  glPushMatrix
+    glTranslate(40.0*Math.cos(@mercury_angle*(Math::PI/180)), 0.0, 40.0*Math.sin(@mercury_angle*(Math::PI/180)))
+    # glRotatef(validate_spin(@earth_spin/57.0), 0.0, 1.0, 0.0)
+    glRotatef(@mercury_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size, @mercury_size, @mercury_size)
+    @mercury.draw
+  glPopMatrix
+
+  glPushMatrix
+    glTranslate(60.0*Math.cos(@venus_angle*(Math::PI/180)), 0.0, 60.0*Math.sin(@venus_angle*(Math::PI/180)))
+    # glRotatef(validate_spin(@earth_spin/243), 0.0, 1.0, 0.0)
+    glRotatef(@venus_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0)
+    @venus.draw
+  glPopMatrix
+
+  glPushMatrix
+    glTranslate(85.0*Math.cos(@earth_angle*(Math::PI/180)),0.0, 85.0*Math.sin(@earth_angle*(Math::PI/180)))
+    # glRotatef(validate_spin(@earth_spin), 0.0, 1.0, 0.0)
+    glRotatef(@earth_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0)
+    @earth.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(105.0*Math.cos(@mars_angle*(Math::PI/180)),0.0, 105.0*Math.sin(@mars_angle*Math::PI/180))
+    glRotatef(@mars_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*2.5, @mercury_size*2.5, @mercury_size*2.5)
+    @mars.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(130.0*Math.cos(@jupiter_angle*(Math::PI/180)), 0.0,130.0*Math.sin(@jupiter_angle*Math::PI/180))
+    # glRotatef(validate_spin(@earth_spin*(24/9.84)), 0.0, 1.0, 0.0)
+    glRotatef(@jupiter_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0)
+    @jupiter.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(190.0*Math.cos(@saturn_angle*(Math::PI/180)), 0.0,190.0*Math.sin(@saturn_angle*Math::PI/180))
+    # glRotatef(validate_spin(@earth_spin*(24.2)), 0.0, 1.0, 0.0)
+    glRotatef(@saturn_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0)
+    @saturn.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(250.0*Math.cos(@uranus_angle*(Math::PI/180)), 0.0, 250.0*Math.sin(@uranus_angle*Math::PI/180))
+    # glRotatef(validate_spin(@earth_spin*(24/17.9)), 0.0, 1.0, 0.0)
+    glRotatef(@uranus_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0)
+    @uranus.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(290.0*Math.cos(@neptune_angle*(Math::PI/180)), 0.0, 290.0*Math.sin(@neptune_angle*Math::PI/180))
+    # glRotatef(validate_spin(@earth_spin*(24/19.1)), 0.0, 1.0, 0.0)
+    glRotatef(@neptune_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0)
+    @neptune.draw
+  glPopMatrix
+  
+  glPushMatrix
+    glTranslate(320.0*Math.cos(@pluto_angle*(Math::PI/180)), 0.0, 320.0*Math.sin(@pluto_angle*Math::PI/180))
+    # glRotatef(validate_spin(@earth_spin/6.39), 0.0, 1.0, 0.0)
+    glRotatef(@pluto_spin, 0.0, 1.0, 0.0)
+    glScalef(@mercury_size*0.7, @mercury_size*0.7, @mercury_size*0.7)
+    @pluto.draw
   glPopMatrix
 
   glutSwapBuffers
@@ -58,20 +148,66 @@ def reshape(width, height)
   glViewport(0, 0, width, height)
   glMatrixMode(GL_PROJECTION)
   glLoadIdentity
-  gluPerspective(45, (1.0 * width) / height, 0.001, 1000.0)
+  gluPerspective(45, (1.0 * width) / height, 0.001, 2000.0)
   glMatrixMode(GL_MODELVIEW)
   glLoadIdentity()
-  gluLookAt(0.0, 50.0, -125.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+  gluLookAt(-150.0, 450.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+  # gluLookAt(0.0, 50.0, -650.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+end
+
+
+def validate_spin(angle)
+  if angle > 360.0
+    angle = angle - 360.0
+  end
+  angle
 end
 
 def idle
-  @spin = @spin + 0.1
-  @spin_ven = @spin_ven + 360.0/360.0
+  @sun_spin += (24.47 /@slow_factor)
+  @mercury_spin += (0.16  /@slow_factor)
+  @venus_spin += (0.675  /@slow_factor)
+  @earth_spin += (1 /@slow_factor)
+  @mars_spin += (1.026  /@slow_factor)
+  @jupiter_spin += ((11.86)  /@slow_factor)
+  @uranus_spin += ((84)  /@slow_factor) 
+  @saturn_spin += ((29)  /@slow_factor)
+  @neptune_spin += ((164.79)  /@slow_factor)
+  @pluto_spin += ((247) /@slow_factor)
+  
+  
+  @earth_angle += 0.02
+  @mercury_angle += (0.02*4)
+  @venus_angle += (0.02*1.6)
+  @mars_angle += (0.02*0.52)
+  @jupiter_angle += (0.02*0.40)
+  @saturn_angle += (0.02*0.32)
+  @uranus_angle += (0.02*0.205)
+  @neptune_angle += (0.02*0.108)
+  @pluto_angle += (0.02*0.06)
 
-  if @spin > 360.0
-    @spin = @spin - 360.0
-    @spin_ven = @spin_ven - 360.0
-  end
+  
+  
+  @mercury_angle = @mercury_angle - 360.0 if @mercury_angle > 360.0
+  @venus_angle = @venus_angle - 360.0 if @venus_angle > 360.0
+  @mars_angle = @mars_angle - 360.0 if @mars_angle > 360.0
+  @earth_angle = @earth_angle - 360.0 if @earth_angle > 360.0
+  @jupiter_angle = @jupiter_angle - 360.0 if @jupiter_angle > 360.0
+  @saturn_angle = @saturn_angle - 360.0 if @saturn_angle > 360.0
+  @neptune_angle = @neptune_angle - 360.0 if @neptune_angle > 360.0
+  @pluto_angle = @pluto_angle - 360.0 if @pluto_angle > 360.0
+  @uranus_angle = @uranus_angle - 360.0 if @uranus_angle > 360.0
+
+  @sun_spin = @sun_spin - 360.0 if @sun_spin > 360.0
+  @mercury_spin = @mercury_spin - 360.0 if @mercury_spin > 360.0
+  @venus_spin = @venus_spin - 360.0 if @venus_spin > 360.0
+  @mars_spin = @mars_spin - 360.0 if @mars_spin > 360.0
+  @earth_spin = @earth_spin - 360.0 if @earth_spin > 360.0
+  @jupiter_spin = @jupiter_spin - 360.0 if @jupiter_spin > 360.0
+  @saturn_spin = @saturn_spin - 360.0 if @saturn_spin > 360.0
+  @neptune_spin = @neptune_spin - 360.0 if @neptune_spin > 360.0
+  @pluto_spin = @pluto_spin - 360.0 if @pluto_spin > 360.0
+  @uranus_spin = @uranus_spin - 360.0 if @uranus_spin > 360.0
 
   @frame_time = glutGet(GLUT_ELAPSED_TIME) - @frame_start
   
@@ -95,15 +231,35 @@ def check_fps
   end
 end
 
-@spin = 0.0
+@slow_factor = 40
+
+@earth_angle = 0.0
+@mercury_angle = 0.0
+@venus_angle = 0.0
+@mars_angle = 0.0
+@jupiter_angle = 0.0
+@saturn_angle = 0.0
+@neptune_angle = 0.0
+@uranus_angle = 0.0
+@pluto_angle = 0.0 
+
+@earth_spin = 0.0
+@sun_spin = 0.0
+@mercury_spin = 0.0
+@venus_spin = 0.0
+@mars_spin = 0.0
+@jupiter_spin = 0.0
+@saturn_spin = 0.0
+@neptune_spin = 0.0
+@uranus_spin = 0.0
+@pluto_spin = 0.0 
+
 @previous_time = 0
 @frame_count = 0
 
-@spin_ven = 0.0
-
 load_objects
 glutInit
-glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH)
+glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 glutInitWindowSize(800,600)
 glutInitWindowPosition(10,10)
 glutCreateWindow("Hola OpenGL, en Ruby")
