@@ -1,0 +1,12 @@
+# Blender MTL File: 'PDB-3L0X-surf.blend'
+# Material Count: 1
+
+newmtl Shape
+Ns 233.333333
+Ka 1.000000 1.000000 1.000000
+Kd 0.261103 0.261103 0.261103
+Ks 0.425000 0.425000 0.425000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2

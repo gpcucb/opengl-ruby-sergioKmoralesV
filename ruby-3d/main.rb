@@ -28,6 +28,9 @@ def load_objects
   @neptune = Model.new('obj/planet', 'obj/neptune.mtl')
   @pluto = Model.new('obj/planet', 'obj/pluto.mtl')
 
+  @silver = Model.new('obj/silversurfer', 'obj/silversurfer.mtl')
+  @silver_glow = Model.new('obj/silversurfer_glow', 'obj/silversurfer_glow.mtl')
+  @explosion = Model.new('obj/explosion','obj/explosion.mtl')
   puts "model loaded"
 end
 
@@ -63,85 +66,111 @@ def draw
   check_fps
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+   glPushMatrix
+    glTranslate(@silver_surfer[0], 0.0, @silver_surfer[2])
+    glRotatef(-45.0,0.0,1.0,0.0)
+    glScalef(@silver_surfer_size, @silver_surfer_size, @silver_surfer_size)  if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
+    @silver.draw
+  glPopMatrix
+
+  if @sun_size != 0.0 
+    glPushMatrix
+      glTranslate(0.0, 0.0, 0.0)
+      glRotatef(@sun_spin, 0.0, 1.0, 0.0)
+      glScalef(@sun_size, @sun_size, @sun_size)
+      @sun.draw
+    glPopMatrix
+  end
+  
+  if @sun_size < 0.0
+    glPushMatrix
+      glTranslate(0.0, 0.0, 0.0)
+      glScalef(@explosion_size, @explosion_size, @explosion_size) if @explosion_size < 290.0
+      @explosion.draw
+    glPopMatrix
+  end
+
   glPushMatrix
-    glTranslate(0.0, 0.0, 0.0)
-    glRotatef(@sun_spin, 0.0, 1.0, 0.0)
-    glScalef(15.0 * @mercury_size, 15.0 * @mercury_size, 15.0 * @mercury_size)
-    @sun.draw
+    glTranslate(0.0, 0.0, @silver_surfer_glow[2])
+    glRotatef(90.0,20.0,0.0,0.0)
+    glScalef(@silver_surfer_glow_size, @silver_surfer_glow_size, @silver_surfer_glow_size)
+    @silver_glow.draw
   glPopMatrix
 
   glPushMatrix
     glTranslate(40.0*Math.cos(@mercury_angle*(Math::PI/180)), 0.0, 40.0*Math.sin(@mercury_angle*(Math::PI/180)))
-    # glRotatef(validate_spin(@earth_spin/57.0), 0.0, 1.0, 0.0)
     glRotatef(@mercury_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size, @mercury_size, @mercury_size)
+    glScalef(@mercury_size, @mercury_size, @mercury_size) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @mercury.draw
   glPopMatrix
 
   glPushMatrix
     glTranslate(60.0*Math.cos(@venus_angle*(Math::PI/180)), 0.0, 60.0*Math.sin(@venus_angle*(Math::PI/180)))
-    # glRotatef(validate_spin(@earth_spin/243), 0.0, 1.0, 0.0)
     glRotatef(@venus_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0)
+    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @venus.draw
   glPopMatrix
 
   glPushMatrix
     glTranslate(85.0*Math.cos(@earth_angle*(Math::PI/180)),0.0, 85.0*Math.sin(@earth_angle*(Math::PI/180)))
-    # glRotatef(validate_spin(@earth_spin), 0.0, 1.0, 0.0)
     glRotatef(@earth_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0)
+    glScalef(@mercury_size*4.0, @mercury_size*4.0, @mercury_size*4.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @earth.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(105.0*Math.cos(@mars_angle*(Math::PI/180)),0.0, 105.0*Math.sin(@mars_angle*Math::PI/180))
     glRotatef(@mars_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*2.5, @mercury_size*2.5, @mercury_size*2.5)
+    glScalef(@mercury_size*2.5, @mercury_size*2.5, @mercury_size*2.5) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @mars.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(130.0*Math.cos(@jupiter_angle*(Math::PI/180)), 0.0,130.0*Math.sin(@jupiter_angle*Math::PI/180))
-    # glRotatef(validate_spin(@earth_spin*(24/9.84)), 0.0, 1.0, 0.0)
     glRotatef(@jupiter_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0)
+    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @jupiter.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(190.0*Math.cos(@saturn_angle*(Math::PI/180)), 0.0,190.0*Math.sin(@saturn_angle*Math::PI/180))
-    # glRotatef(validate_spin(@earth_spin*(24.2)), 0.0, 1.0, 0.0)
     glRotatef(@saturn_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0)
+    glScalef(@mercury_size*8.0, @mercury_size*8.0, @mercury_size*8.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @saturn.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(250.0*Math.cos(@uranus_angle*(Math::PI/180)), 0.0, 250.0*Math.sin(@uranus_angle*Math::PI/180))
-    # glRotatef(validate_spin(@earth_spin*(24/17.9)), 0.0, 1.0, 0.0)
     glRotatef(@uranus_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0)
+    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @uranus.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(290.0*Math.cos(@neptune_angle*(Math::PI/180)), 0.0, 290.0*Math.sin(@neptune_angle*Math::PI/180))
-    # glRotatef(validate_spin(@earth_spin*(24/19.1)), 0.0, 1.0, 0.0)
     glRotatef(@neptune_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0)
+    glScalef(@mercury_size*6.0, @mercury_size*6.0, @mercury_size*6.0) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @neptune.draw
   glPopMatrix
   
   glPushMatrix
     glTranslate(320.0*Math.cos(@pluto_angle*(Math::PI/180)), 0.0, 320.0*Math.sin(@pluto_angle*Math::PI/180))
-    # glRotatef(validate_spin(@earth_spin/6.39), 0.0, 1.0, 0.0)
     glRotatef(@pluto_spin, 0.0, 1.0, 0.0)
-    glScalef(@mercury_size*0.7, @mercury_size*0.7, @mercury_size*0.7)
+    glScalef(@mercury_size*0.7, @mercury_size*0.7, @mercury_size*0.7) if @explosion_size < 158.0
+    glScalef(0.0, 0.0, 0.0) if @explosion_size >= 158.0
     @pluto.draw
   glPopMatrix
 
-  glutSwapBuffers
+   glutSwapBuffers
 end
 
 def reshape(width, height)
@@ -151,8 +180,8 @@ def reshape(width, height)
   gluPerspective(45, (1.0 * width) / height, 0.001, 2000.0)
   glMatrixMode(GL_MODELVIEW)
   glLoadIdentity()
-  gluLookAt(-150.0, 450.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-  # gluLookAt(0.0, 50.0, -650.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+  #gluLookAt(-300.0, 450.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+  gluLookAt(-200.0, 300.0, -650.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 end
 
 
@@ -175,7 +204,20 @@ def idle
   @neptune_spin += ((164.79)  /@slow_factor)
   @pluto_spin += ((247) /@slow_factor)
   
-  
+  if @arrives_sun == false
+    @silver_surfer[0] += 1
+    @silver_surfer[2] += 1
+  else
+    @sun_size -=0.2 if @sun_size > 0.0
+    @explosion_size += 1 if(@sun_size < 0.0 && @explosion_size < 290.0)
+  end
+
+  @silver_surfer_size -= 0.1 if @silver_surfer_size > 0.0
+  @silver_surfer_glow_size += 0.3 if @explosion_size >= 158.0
+  @silver_surfer_glow[2] += 1 if @explosion_size >= 158.0
+
+  @arrives_sun = true if @silver_surfer[0] == 0.0
+
   @earth_angle += 0.02
   @mercury_angle += (0.02*4)
   @venus_angle += (0.02*1.6)
@@ -184,9 +226,7 @@ def idle
   @saturn_angle += (0.02*0.32)
   @uranus_angle += (0.02*0.205)
   @neptune_angle += (0.02*0.108)
-  @pluto_angle += (0.02*0.06)
-
-  
+  @pluto_angle += (0.02*0.06)  
   
   @mercury_angle = @mercury_angle - 360.0 if @mercury_angle > 360.0
   @venus_angle = @venus_angle - 360.0 if @venus_angle > 360.0
@@ -233,15 +273,15 @@ end
 
 @slow_factor = 40
 
-@earth_angle = 0.0
-@mercury_angle = 0.0
-@venus_angle = 0.0
-@mars_angle = 0.0
-@jupiter_angle = 0.0
-@saturn_angle = 0.0
-@neptune_angle = 0.0
-@uranus_angle = 0.0
-@pluto_angle = 0.0 
+@earth_angle = 30.0
+@mercury_angle = 45.0
+@venus_angle = 90.0
+@mars_angle = 180.0
+@jupiter_angle = 300.0
+@saturn_angle = 200.0
+@neptune_angle = 25.0
+@uranus_angle = 150.0
+@pluto_angle = 70.0 
 
 @earth_spin = 0.0
 @sun_spin = 0.0
@@ -253,7 +293,13 @@ end
 @neptune_spin = 0.0
 @uranus_spin = 0.0
 @pluto_spin = 0.0 
-
+@silver_surfer = [-200.0,0.0,-200.0]
+@silver_surfer_size = @mercury_size *15.0
+@silver_surfer_glow = [0.0,0.0,0.0]
+@silver_surfer_glow_size = 1.0
+@arrives_sun = false
+@sun_size = @mercury_size *15.0
+@explosion_size = 1.0
 @previous_time = 0
 @frame_count = 0
 
