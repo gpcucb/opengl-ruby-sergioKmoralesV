@@ -3,6 +3,7 @@ require 'glu'
 require 'glut'
 require 'chunky_png'
 require 'wavefront'
+require 'sounder'
 
 require_relative 'model'
 
@@ -14,8 +15,11 @@ FPS = 100.freeze
 DELAY_TIME = (1000.0 / FPS)
 DELAY_TIME.freeze
 @mercury_size = 2.0
+Sounder::System.set_volume 70
 
 def load_objects
+  sound = Sounder::Sound.new "music/background.mp3"
+  @explosion_sound = Sounder::Sound.new "music/explosion.mp3"
   puts "Loading model"
   @sun = Model.new('obj/planet', 'obj/sun.mtl')
   @mercury = Model.new('obj/planet', 'obj/mercury.mtl')
@@ -31,6 +35,7 @@ def load_objects
   @silver = Model.new('obj/silversurfer', 'obj/silversurfer.mtl')
   @silver_glow = Model.new('obj/silversurfer_glow', 'obj/silversurfer_glow.mtl')
   @explosion = Model.new('obj/explosion','obj/explosion.mtl')
+  sound.play 
   puts "model loaded"
 end
 
@@ -89,11 +94,12 @@ def draw
       glScalef(@explosion_size, @explosion_size, @explosion_size) if @explosion_size < 290.0
       @explosion.draw
     glPopMatrix
+    @explosion_sound.play if @explosion_size < 6.0
   end
 
   glPushMatrix
     glTranslate(0.0, 0.0, @silver_surfer_glow[2])
-    glRotatef(90.0,20.0,0.0,0.0)
+    glRotatef(90.0,0.0,180.0,0.0)
     glScalef(@silver_surfer_glow_size, @silver_surfer_glow_size, @silver_surfer_glow_size)
     @silver_glow.draw
   glPopMatrix
@@ -214,7 +220,7 @@ def idle
 
   @silver_surfer_size -= 0.1 if @silver_surfer_size > 0.0
   @silver_surfer_glow_size += 0.3 if @explosion_size >= 158.0
-  @silver_surfer_glow[2] += 1 if @explosion_size >= 158.0
+  @silver_surfer_glow[2] += 3 if @explosion_size >= 158.0
 
   @arrives_sun = true if @silver_surfer[0] == 0.0
 
